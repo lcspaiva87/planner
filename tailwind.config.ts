@@ -9,6 +9,9 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
+        fontFamily:{
+          sans : "Inter",
+        },
         lime: {
           300: "#BEF264",
           950: "#1A2E05",
