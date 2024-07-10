@@ -9,11 +9,14 @@ import "react-day-picker/dist/style.css";
 export default function Home() {
   const [location, setLocation] = useState('');
   const [isOpen, setIsOpen] = useState(false)
+  const [isGuestsInputOpen, setIsGuestsInputOpen] = useState(false)
+
   const [eventStartAndEndDates, setEventStartAndEndDates] = useState<DateRange | undefined>()
 
   const displayedDate = eventStartAndEndDates && eventStartAndEndDates.from && eventStartAndEndDates.to
     ? format(eventStartAndEndDates.from, "d' de 'LLL").concat(' até ').concat(format(eventStartAndEndDates.to, "d' de 'LLL"))
     : null
+
 
   return (
     <main className=" flex justify-center items-center h-screen  bg-[url('../../public/bg.png')] bg-cover ">
@@ -50,32 +53,36 @@ export default function Home() {
 
 
           <button
+            onClick={() => setIsGuestsInputOpen(true)}
             disabled={!location || !eventStartAndEndDates}
             className=" flex gap-2 px-5 py-2 bg-lime-300 items-center justify-center rounded-lg text-zinc-950">
             Continuar
             <ArrowRight className="size-4" />
           </button>
         </div>
+        {isGuestsInputOpen && (
+          <div className="bg-zinc-900 shadow-shape items-center gap-5 pl-4 pr-4 h-16 flex rounded-xl ">
+            <div className="flex items-center gap-2 flex-1">
+              <UserPlus2 className="text-zinc-400 size-7" />
+              <input
+                value={location}
+                onChange={(e) => setLocation(e.target.value)}
+                type="text"
+                placeholder="Quem estará na viagem?"
+                className="placeholder:text-zinc-400 text-zinc-100 font-normal text-lg bg-transparent w-full focus:outline-none placeholder:text-sm"
+              />
+            </div>
 
-        <div className="bg-zinc-900 shadow-shape items-center gap-5 pl-4 pr-4 h-16 flex rounded-xl ">
-          <div className="flex items-center gap-2 flex-1">
-            <UserPlus2 className="text-zinc-400 size-7" />
-            <input
-              value={location}
-              onChange={(e) => setLocation(e.target.value)}
-              type="text"
-              placeholder="Quem estará na viagem?"
-              className="placeholder:text-zinc-400 text-zinc-100 font-normal text-lg bg-transparent w-full focus:outline-none placeholder:text-sm"
-            />
+            <button
+              onClick={() => setIsGuestsInputOpen(false)}
+              disabled={!location || !eventStartAndEndDates}
+              className=" flex gap-2 px-5 py-2 bg-lime-300 items-center justify-center rounded-lg text-zinc-950 ">
+              Confirmar viagem
+              <ArrowRight className="size-4" />
+            </button>
           </div>
+        )}
 
-          <button
-            disabled={!location || !eventStartAndEndDates}
-            className=" flex gap-2 px-5 py-2 bg-lime-300 items-center justify-center rounded-lg text-zinc-950 ">
-            Confirmar viagem
-            <ArrowRight className="size-4" />
-          </button>
-        </div>
         <p className="text-zinc-500 text-sm font-normal">Ao planejar sua viagem pela plann.er você automaticamente concorda com nossos <a href="#" className="underline text-zinc-300">
           termos de uso</a> e
           <a href="#" className="underline text-zinc-300 ml-1">
