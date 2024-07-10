@@ -10,7 +10,7 @@ export default function Home() {
   const [location, setLocation] = useState('');
   const [isOpen, setIsOpen] = useState(false)
   const [isGuestsInputOpen, setIsGuestsInputOpen] = useState(false)
-
+  const [email, setEmail] = useState('')
   const [eventStartAndEndDates, setEventStartAndEndDates] = useState<DateRange | undefined>()
 
   const displayedDate = eventStartAndEndDates && eventStartAndEndDates.from && eventStartAndEndDates.to
@@ -65,8 +65,8 @@ export default function Home() {
             <div className="flex items-center gap-2 flex-1">
               <UserPlus2 className="text-zinc-400 size-7" />
               <input
-                value={location}
-                onChange={(e) => setLocation(e.target.value)}
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
                 type="text"
                 placeholder="Quem estará na viagem?"
                 className="placeholder:text-zinc-400 text-zinc-100 font-normal text-lg bg-transparent w-full focus:outline-none placeholder:text-sm"
