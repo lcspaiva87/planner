@@ -3,10 +3,9 @@ import { ReactNode } from "react";
 
 
 interface ModalProps {
-  isOpen: boolean;
+
   setIsOpen: (value: boolean) => void;
-  eventStartAndEndDates: Date[];
-  setEventStartAndEndDates: (value: Date[]) => void;
+
   children: ReactNode;
 
 }

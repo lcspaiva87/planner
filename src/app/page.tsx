@@ -1,6 +1,7 @@
 "use client"
+import { Modal } from "@/components/Modal";
 import { format } from "date-fns";
-import { ArrowRight, Calendar, MapPin, X } from "lucide-react";
+import { ArrowRight, Calendar, MapPin } from "lucide-react";
 import Image from "next/image";
 import { useState } from "react";
 import { DateRange, DayPicker } from "react-day-picker";
@@ -63,21 +64,14 @@ export default function Home() {
       </div>
       {
         isOpen && (
-          <div className="fixed inset-0 bg-black/60 flex items-center justify-center ">
-            <div className="bg-zinc-900 px-6 py-5 w-[360px]">
-              <div className="flex justify-between">
-                <h1 className="text-lg font-semibold">Selecione a data de viagem</h1>
-                <button className="size-3"
-                  onClick={() => setIsOpen(false)}
-                >
-                  <X className="size-4 text-zinc-300 hover:text-zinc-600" />
-                </button>
-              </div>
-              <DayPicker mode="range" selected={eventStartAndEndDates} onSelect={setEventStartAndEndDates} />
-            </div>
-          </div>
+          <Modal
+            title="Selecione a data de viagem"
+            setIsOpen={setIsOpen}           >
+            <DayPicker mode="range" selected={eventStartAndEndDates} onSelect={setEventStartAndEndDates} />
+          </Modal>
         )
       }
+
 
     </main>
   );
