@@ -1,7 +1,19 @@
-
-import { ArrowRight, Calendar, MapPin } from "lucide-react";
+"use client"
+import { format } from "date-fns";
+import { ArrowRight, Calendar, MapPin, X } from "lucide-react";
 import Image from "next/image";
+import { useState } from "react";
+import { DateRange, DayPicker } from "react-day-picker";
+import "react-day-picker/dist/style.css";
 export default function Home() {
+  const [location, setLocation] = useState('');
+  const [isOpen, setIsOpen] = useState(false)
+  const [eventStartAndEndDates, setEventStartAndEndDates] = useState<DateRange | undefined>()
+
+  const displayedDate = eventStartAndEndDates && eventStartAndEndDates.from && eventStartAndEndDates.to
+    ? format(eventStartAndEndDates.from, "d' de 'LLL").concat(' até ').concat(format(eventStartAndEndDates.to, "d' de 'LLL"))
+    : null
+
   return (
     <main className=" flex justify-center items-center h-screen  bg-[url('../../public/bg.png')] bg-cover ">
       <div className="text-center max-w-3xl px-6 flex flex-col gap-10 ">
@@ -11,35 +23,62 @@ export default function Home() {
         </div>
 
         <div className="bg-zinc-900 shadow-shape items-center gap-5 pl-4 pr-4 h-16 flex rounded-xl ">
-          <div className="flex items-center gap-2">
-            <MapPin className="text-zinc-400 size-6" />
-            <input type="text"
+          <div className="flex items-center gap-2 flex-1">
+            <MapPin className="text-zinc-400 size-7" />
+            <input
+              value={location}
+              onChange={(e) => setLocation(e.target.value)}
+              type="text"
               placeholder="Para onde você vai?"
-              className="text-zinc-400 font-normal text-lg bg-transparent w-full focus:outline-none placeholder:text-sm"
+              className="placeholder:text-zinc-400 text-zinc-100 font-normal text-lg bg-transparent w-full focus:outline-none placeholder:text-sm"
             />
-            <div className="flex items-center gap-2">
-              <Calendar className="text-zinc-400 size-5" />
-              <input
-                type="text"
-                placeholder="Quando?"
-                className="text-zinc-400 font-normal text-lg bg-transparent w-full focus:outline-none placeholder:text-sm"
-              />
-
-            </div>
-            <button className=" flex gap-2 px-5 py-2 bg-lime-300 items-center justify-center rounded-lg text-zinc-950">
-              Continuar
-              <ArrowRight className="size-4" />
-            </button>
           </div>
-        </div>
 
+
+          <button
+            onClick={() => setIsOpen(true)}
+            className="flex items-center gap-2 text-left w-[240px]"
+          >
+            <Calendar className="text-zinc-400 size-5" />
+            <span
+              className="text-lg text-zinc-400 w-40 flex-1"
+            >
+              {displayedDate || 'Quando'}
+            </span>
+          </button>
+
+
+          <button className=" flex gap-2 px-5 py-2 bg-lime-300 items-center justify-center rounded-lg text-zinc-950">
+            Continuar
+            <ArrowRight className="size-4" />
+          </button>
+        </div>
         <p className="text-zinc-500 text-sm font-normal">Ao planejar sua viagem pela plann.er você automaticamente concorda com nossos <a href="#" className="underline text-zinc-300">
           termos de uso</a> e
           <a href="#" className="underline text-zinc-300 ml-1">
             políticas de privacidade
           </a>
           .</p>
+
       </div>
+      {
+        isOpen && (
+          <div className="fixed inset-0 bg-black/60 flex items-center justify-center ">
+            <div className="bg-zinc-900 px-6 py-5 w-[360px]">
+              <div className="flex justify-between">
+                <h1 className="text-lg font-semibold">Selecione a data de viagem</h1>
+                <button className="size-3"
+                  onClick={() => setIsOpen(false)}
+                >
+                  <X className="size-4 text-zinc-300 hover:text-zinc-600" />
+                </button>
+              </div>
+              <DayPicker mode="range" selected={eventStartAndEndDates} onSelect={setEventStartAndEndDates} />
+            </div>
+          </div>
+        )
+      }
+
     </main>
   );
 }
