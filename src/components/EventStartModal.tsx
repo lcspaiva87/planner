@@ -28,7 +28,7 @@ export function EventStartModal({
     <div>
       <div className="bg-zinc-900 shadow-shape items-center gap-5 pl-4 pr-4 h-16 flex rounded-xl ">
         <div className="flex items-center gap-2 flex-1">
-          <MapPin className="text-zinc-400 size-7" />
+          <MapPin className="text-zinc-400 size-4" />
           <input
             value={location}
             onChange={(e) => setLocation(e.target.value)}
@@ -43,9 +43,9 @@ export function EventStartModal({
           onClick={() => setIsOpen(true)}
           className="flex items-center gap-2 text-left w-[240px]"
         >
-          <Calendar className="text-zinc-400 size-5" />
+          <Calendar className="text-zinc-400 size-4" />
           <span
-            className="text-lg text-zinc-400 w-40 flex-1"
+            className="text-sm text-zinc-400 w-40 flex-1 "
           >
             {displayedDate || 'Quando'}
           </span>
