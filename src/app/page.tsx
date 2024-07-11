@@ -1,10 +1,10 @@
 "use client"
-import { Modal } from "@/components/Modal";
+import { EventStartModal } from "@/components/EventStartModal";
 import { format } from "date-fns";
-import { ArrowRight, Calendar, MapPin, UserPlus2 } from "lucide-react";
+import { ArrowRight, UserPlus2 } from "lucide-react";
 import Image from "next/image";
 import { useState } from "react";
-import { DateRange, DayPicker } from "react-day-picker";
+import { DateRange } from "react-day-picker";
 import "react-day-picker/dist/style.css";
 export default function Home() {
   const [location, setLocation] = useState('');
@@ -26,40 +26,19 @@ export default function Home() {
           <p className="font-normal text-lg text-zinc-300">Convide seus amigos e planeje sua próxima viagem!</p>
         </div>
 
-        <div className="bg-zinc-900 shadow-shape items-center gap-5 pl-4 pr-4 h-16 flex rounded-xl ">
-          <div className="flex items-center gap-2 flex-1">
-            <MapPin className="text-zinc-400 size-7" />
-            <input
-              value={location}
-              onChange={(e) => setLocation(e.target.value)}
-              type="text"
-              placeholder="Para onde você vai?"
-              className="placeholder:text-zinc-400 text-zinc-100 font-normal text-lg bg-transparent w-full focus:outline-none placeholder:text-sm"
-            />
-          </div>
 
+        <EventStartModal
+          displayedDate={displayedDate}
+          location={location}
+          setIsGuestsInputOpen={setIsGuestsInputOpen}
+          setLocation={setLocation}
 
-          <button
-            onClick={() => setIsOpen(true)}
-            className="flex items-center gap-2 text-left w-[240px]"
-          >
-            <Calendar className="text-zinc-400 size-5" />
-            <span
-              className="text-lg text-zinc-400 w-40 flex-1"
-            >
-              {displayedDate || 'Quando'}
-            </span>
-          </button>
+          isOpen={isOpen}
+          setIsOpen={setIsOpen}
+          setEventStartAndEndDates={setEventStartAndEndDates}
+          eventStartAndEndDates={eventStartAndEndDates}
+        />
 
-
-          <button
-            onClick={() => setIsGuestsInputOpen(true)}
-            disabled={!location || !eventStartAndEndDates}
-            className=" flex gap-2 px-5 py-2 bg-lime-300 items-center justify-center rounded-lg text-zinc-950">
-            Continuar
-            <ArrowRight className="size-4" />
-          </button>
-        </div>
         {isGuestsInputOpen && (
           <div className="bg-zinc-900 shadow-shape items-center gap-5 pl-4 pr-4 h-16 flex rounded-xl ">
             <div className="flex items-center gap-2 flex-1">
@@ -88,15 +67,6 @@ export default function Home() {
         </p>
 
       </div>
-      {
-        isOpen && (
-          <Modal
-            title="Selecione a data de viagem"
-            setIsOpen={setIsOpen}           >
-            <DayPicker mode="range" selected={eventStartAndEndDates} onSelect={setEventStartAndEndDates} />
-          </Modal>
-        )
-      }
 
 
     </main>
