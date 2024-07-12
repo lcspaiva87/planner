@@ -61,7 +61,7 @@ export function InviteGuestsModal({
               </div>
 
               <div className="w-full h-px bg-zinc-800" />
-              <div className=" rounded-lg border border-zinc-800 bg-zinc-950 px-4 py-2.5 flex justify-between mt-2">
+              <form className=" rounded-lg border border-zinc-800 bg-zinc-950 px-4 py-2.5 flex justify-between mt-2">
                 <div className="flex items-center gap-2">
                   <AtSign className="text-zinc-400 size-4" />
                   <input
@@ -72,13 +72,14 @@ export function InviteGuestsModal({
                   />
                 </div>
                 <button
+                  type="submit"
                   onClick={() => setIsGuestsInputOpen(true)}
                   disabled={!location || !eventStartAndEndDates}
                   className=" flex gap-2 px-5 py-2 bg-lime-300 items-center justify-center rounded-lg text-zinc-950">
                   Convidar
                   <Plus className="size-4" />
                 </button>
-              </div>
+              </form>
             </div>
           </Modal>
         )
