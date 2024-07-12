@@ -1,21 +1,43 @@
 "use client"
 import { EventStartModal } from "@/components/EventStartModal";
-import { Selectguests } from "@/components/Selectguests";
+import { InviteGuestsModal } from "@/components/InviteGuestsModal";
 import { format } from "date-fns";
 import Image from "next/image";
-import { useState } from "react";
+import { FormEvent, useState } from "react";
 import { DateRange } from "react-day-picker";
 import "react-day-picker/dist/style.css";
 export default function Home() {
   const [location, setLocation] = useState('');
   const [isOpen, setIsOpen] = useState(false)
   const [isGuestsInputOpen, setIsGuestsInputOpen] = useState(false)
-  const [email, setEmail] = useState('')
+  const [emailsToInvite, setEmailsToInvite] = useState<string[]>([])
   const [eventStartAndEndDates, setEventStartAndEndDates] = useState<DateRange | undefined>()
 
   const displayedDate = eventStartAndEndDates && eventStartAndEndDates.from && eventStartAndEndDates.to
     ? format(eventStartAndEndDates.from, "d' de 'LLL").concat(' até ').concat(format(eventStartAndEndDates.to, "d' de 'LLL"))
     : null
+
+  function addNewEmailToInvite(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault()
+
+    const data = new FormData(event.currentTarget)
+    const email = data.get('email')?.toString()
+
+    if (!email) {
+      return
+    }
+
+    if (emailsToInvite.includes(email)) {
+      return
+    }
+
+    setEmailsToInvite([
+      ...emailsToInvite,
+      email
+    ])
+
+    event.currentTarget.reset()
+  }
 
 
   return (
@@ -37,7 +59,7 @@ export default function Home() {
         />
 
         {isGuestsInputOpen && (
-          <Selectguests email={email} setEmail={setEmail} setIsGuestsInputOpen={setIsGuestsInputOpen} location={location} eventStartAndEndDates={eventStartAndEndDates} />
+          <InviteGuestsModal emailsToInvite={emailsToInvite} setIsGuestsInputOpen={setIsGuestsInputOpen} location={location} eventStartAndEndDates={eventStartAndEndDates} />
 
         )}
         <p className="text-sm text-zinc-500">
