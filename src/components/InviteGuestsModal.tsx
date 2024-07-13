@@ -1,20 +1,20 @@
 import { ArrowRight, AtSign, Plus, UserPlus2, X } from "lucide-react";
-import { useState } from "react";
-import { DateRange } from "react-day-picker";
+import { FormEvent, useState } from "react";
 import { Modal } from "./Modal";
 interface InviteGuestsModalProps {
   emailsToInvite: string[];
   setIsGuestsInputOpen: (isOpen: boolean) => void;
   location: string;
-  eventStartAndEndDates: DateRange | undefined;
+  addNewEmailToInvite: (event: FormEvent<HTMLFormElement>) => void;
+
 
 }
 export function InviteGuestsModal({
   emailsToInvite,
-  eventStartAndEndDates,
-  location,
 
-  setIsGuestsInputOpen
+  location,
+  setIsGuestsInputOpen,
+  addNewEmailToInvite
 }: InviteGuestsModalProps) {
   const [isOpen, setIsOpen] = useState(false)
   return (
@@ -36,7 +36,7 @@ export function InviteGuestsModal({
 
       <button
         onClick={() => setIsGuestsInputOpen(false)}
-        disabled={!location || !eventStartAndEndDates}
+
         className=" flex gap-2 px-5 py-2 bg-lime-300 items-center justify-center rounded-lg text-zinc-950 ">
         Confirmar viagem
         <ArrowRight className="size-4" />
@@ -61,7 +61,7 @@ export function InviteGuestsModal({
               </div>
 
               <div className="w-full h-px bg-zinc-800" />
-              <form className=" rounded-lg border border-zinc-800 bg-zinc-950 px-4 py-2.5 flex justify-between mt-2">
+              <form onSubmit={addNewEmailToInvite} className=" rounded-lg border border-zinc-800 bg-zinc-950 px-4 py-2.5 flex justify-between mt-2">
                 <div className="flex items-center gap-2">
                   <AtSign className="text-zinc-400 size-4" />
                   <input
@@ -73,8 +73,6 @@ export function InviteGuestsModal({
                 </div>
                 <button
                   type="submit"
-                  onClick={() => setIsGuestsInputOpen(true)}
-                  disabled={!location || !eventStartAndEndDates}
                   className=" flex gap-2 px-5 py-2 bg-lime-300 items-center justify-center rounded-lg text-zinc-950">
                   Convidar
                   <Plus className="size-4" />

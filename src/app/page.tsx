@@ -59,7 +59,7 @@ export default function Home() {
         />
 
         {isGuestsInputOpen && (
-          <InviteGuestsModal emailsToInvite={emailsToInvite} setIsGuestsInputOpen={setIsGuestsInputOpen} location={location} eventStartAndEndDates={eventStartAndEndDates} />
+          <InviteGuestsModal emailsToInvite={emailsToInvite} setIsGuestsInputOpen={setIsGuestsInputOpen} location={location} addNewEmailToInvite={addNewEmailToInvite} />
 
         )}
         <p className="text-sm text-zinc-500">
